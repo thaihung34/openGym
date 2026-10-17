@@ -56,11 +56,16 @@ async function worker() {
 await Promise.all(Array.from({length:4}, worker))
 fs.writeFileSync(cacheFile, JSON.stringify(cache))
 const names = {
+  '1 2 stick drill':'bài tập 1–2 với gậy',
+  '123 back drill':'bài tập lưng 1–2–3',
+  '1 to 2 jump box':'bật nhảy một chân lên bục, tiếp đất hai chân',
+  '2 to 1 jump box':'bật nhảy hai chân lên bục, tiếp đất một chân',
   'push-up':'chống đẩy', 'pull-up':'hít xà đơn', 'chin-up':'hít xà đơn tay ngửa',
   'squat':'squat', 'deadlift':'kéo tạ', 'barbell bench press':'đẩy ngực với tạ đòn',
   'dumbbell bench press':'đẩy ngực với tạ đơn', 'plank':'plank',
 }
 const gymTerms = [
+  [/\bdrills?\b/i, [['máy khoan','bài tập'],['mũi khoan','bài tập'],['khoan','bài tập']]],
   [/\bbands?\b/i, [['ban nhạc','dây đàn hồi']]],
   [/kettlebell/i, [['chuông ấm','tạ ấm']]],
   [/dumbbell/i, [['quả tạ','tạ đơn']]],
@@ -82,6 +87,10 @@ function polish(source, translated, isName = false) {
     for (const [bad, good] of pairs) text = text.replace(new RegExp('(?<![\\p{L}])'+bad+'(?![\\p{L}])','giu'),good)
   }
   if (isName && /\bback\b/i.test(source)) text=text.replace(/trở lại/gi,'lưng')
+  if (isName && /\brows?\b/i.test(source)) text=text.replace(/hàng/gi,'kéo')
+  if (isName && /\bflies\b|\bfly\b/i.test(source)) text=text.replace(/bay/gi,'banh tay')
+  if (isName && /\bpress\b/i.test(source)) text=text.replace(/báo chí/gi,'đẩy')
+  if (isName && /\bcurl\b/i.test(source)) text=text.replace(/cuộn tròn|cuộn/gi,'gập')
   return text
 }
 const rows = Object.fromEntries(EXDB.map(ex => [ex.id, {
