@@ -130,7 +130,7 @@ export function tn(one, other, n, ...rest) {
 // The English steps and descriptions of 5,000+ exercises are too big to sit in the bundle every
 // screen loads, so they come in their own chunk the first time an exercise's details are shown.
 // Until it lands the readers return nothing, and the loader's notify re-renders whoever asked.
-const askDetails = () => {ar: 'العربية', vi: 'Tiếng Việt'ar: 'ar-u-nu-latn', vi: 'vi-VN'
+const askDetails = () => {
   if (detailsAsked || !detailsLoader) return
   detailsAsked = true
   detailsLoader()
